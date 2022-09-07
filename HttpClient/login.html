@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>login</title>
+
+    <style type="text/css">
+
+        #left {
+            width: 40%;
+            height: 800px;
+            background: cadetblue;
+            float: left;
+        }
+
+        #left-circle {
+            width: 300px;
+            height: 300px;
+            border-radius: 100%;
+            margin-top: 35%;
+            margin-left: 27%;
+            background: #ffffff;
+
+        }
+
+        #right {
+            width: 60%;
+            height: 800px;
+            background: #70c1b3;
+            float: left;
+        }
+
+        #blank {
+            text-align: center;
+            color: aliceblue;
+            height: 20%;
+        }
+
+        #rect {
+            width: 60%;
+            height: 60%;
+            background: rgb(255, 255, 255);
+            margin: 0 auto;
+        }
+
+        #welcome {
+            text-align: center;
+            padding-top: 7%;
+            font-size: 2.5em;
+            color: #646464;
+        }
+
+        .text {
+            padding-left: 10%;
+            padding-top: 4%;
+            font-size: 1.2em;
+            color: #646464;
+        }
+
+        .edit {
+            height: 35px;
+            font-size: 18px;
+            border-color: #5f9ea0;
+            border-width: 1px;
+            margin-left: 10%;
+            margin-top: 1%;
+            width: 80%;
+        }
+
+        #blank-two {
+            width: 81%;
+            height: 1%;
+            margin-left: 10%;
+            margin-top: 1%;
+            background: #ffffff;
+        }
+
+        #lab {
+            color: #646464;
+            alignment: center;
+            vertical-align: center;
+            font-size: 1.15em;
+        }
+
+        #check {
+            vertical-align: middle;
+            zoom: 160%;
+            margin-left: 10%;
+            font-size: 3em;
+            margin-top: 0%;
+        }
+
+        .log {
+            width: 81%;
+            height: 10%;
+            margin-left: 10%;
+            margin-top: 2%;
+            background: coral;
+            text-align: center;
+            color: aliceblue;
+            font-size: 2em;
+            border: 0;
+        }
+
+        .log:hover {
+            background: #ff9f7d;
+        }
+
+        .log:active {
+            background: #ffcdb7;
+        }
+
+        #other {
+            width: 81%;
+            height: 10%;
+            margin-left: 10%;
+            margin-top: 4%;
+            background: #ffffff;
+            text-align: center;
+            font-size: 1.2em
+        }
+
+        a:link {
+            color: #ff7f50;
+        }
+
+        a:visited {
+            color: #ff7f50;
+        }
+
+        a:hover {
+            color: rgb(201, 156, 140);
+        }
+
+        a:active {
+            color: #ff7f50;
+        }
+    </style>
+</head>
+
+<body>
+
+
+<div id="left">
+
+    <div id="left-circle">
+        <img src="pic.jpg" width="300px" height="300px" style="border-radius: 50%">
+    </div>
+</div>
+<div id="right">
+
+    <div id="blank"></div>
+    <div id="rect">
+
+        <div id="welcome">欢迎/Welcome</div>
+        <div class="text">用户名/User Name</div>
+        <input type="text" class="edit" id="username" placeholder="username">
+        <div class="text">密码/Password</div>
+        <input type="text" class="edit" id="password" placeholder="password">
+
+        <div id="blank-two"></div>
+
+        <div class="text" style="color: red;margin-top: -4%;visibility: hidden" id="fail">登录失败，用户名或密码错误</div>
+        <div>
+            <input class="log" type="submit" value="登&nbsp;&nbsp;录" onclick="myLogin()">
+        </div>
+
+        <div id="other"><span style="float: left"><a href="register.html"> 注册账号/Sign Up</a></span>
+            <span style="float: right"><a href="find.html"> 找回密码/Forget Password</a></span></div>
+
+    </div>
+</div>
+
+</div>
+
+
+</body>
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+    var usr = document.getElementById("username");
+    var psw = document.getElementById("password");
+    //import axios from "axios";
+    function myLogin(){
+        axios.get('http://localhost:2022/login',{
+            params:{
+                usr:usr.value,
+                psw:psw.value
+            }
+        }).then((res)=>{
+            console.log(res)
+            if(res.data==="login success"){
+                window.location.href="loginsuccess.html?id="+usr.value+"";
+            }
+        }).catch(err=>{
+            if(err.response.data==="username or password error"){
+                var t = document.getElementById("fail");
+                t.style.visibility="visible"
+            }
+        })
+    }
+
+</script>
+</html>

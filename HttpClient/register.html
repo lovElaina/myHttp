@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>register</title>
+
+    <style type="text/css">
+
+
+        #right {
+            width: 100%;
+            height: 800px;
+            background: #70c1b3;
+        }
+
+        #blank {
+            text-align: center;
+            color: aliceblue;
+            height: 20%;
+        }
+
+        #rect {
+            width: 40%;
+            height: 60%;
+            background: rgb(255, 255, 255);
+            margin: 0 auto;
+        }
+
+        #welcome {
+            text-align: center;
+            padding-top: 7%;
+            font-size: 2.5em;
+            color: #646464;
+        }
+
+        .text {
+            padding-left: 10%;
+            padding-top: 4%;
+            font-size: 1.2em;
+            color: #646464;
+        }
+
+        .edit {
+            height: 35px;
+            font-size: 18px;
+            border-color: #5f9ea0;
+            border-width: 1px;
+            margin-left: 10%;
+            margin-top: 1%;
+            width: 80%;
+        }
+
+
+        .log {
+            width: 81%;
+            height: 10%;
+            margin-left: 10%;
+            margin-top: 5%;
+            background: coral;
+            text-align: center;
+            color: aliceblue;
+            font-size: 2em;
+            border: 0;
+        }
+
+        .log:hover {
+            background: #ff9f7d;
+        }
+
+        .log:active {
+            background: #ffcdb7;
+        }
+
+
+        a:link {
+            color: #ff7f50;
+        }
+
+        a:visited {
+            color: #ff7f50;
+        }
+
+        a:hover {
+            color: rgb(201, 156, 140);
+        }
+
+        a:active {
+            color: #ff7f50;
+        }
+    </style>
+</head>
+
+<body>
+
+
+
+<div id="right">
+
+    <div id="blank"></div>
+    <div id="rect">
+
+        <div id="welcome">注册/Register</div>
+        <div class="text">用户名/User Name</div>
+        <input type="text" class="edit" id="username" placeholder="username">
+        <div class="text">密码/Password</div>
+        <input type="text" class="edit" id="password" placeholder="password">
+
+        <div style="display: flex;margin-left: 0%;margin-right: 7%;margin-top: 1%">
+            <input style="margin-right: 2%" class="log" type="submit" value="注&nbsp;&nbsp;册" onclick="myRegister()">
+            <input style="margin-left: 2%;background: cornflowerblue" class="log" type="submit" value="返&nbsp;&nbsp;回" onclick=window.location.href="login.html">
+
+        </div>
+
+        <div class="text" style="color: red;visibility: hidden" id="fail"></div>
+    </div>
+</div>
+
+</div>
+
+
+</body>
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+    var usr = document.getElementById("username");
+    var psw = document.getElementById("password");
+    //import axios from "axios";
+    function myRegister(){
+        axios.get('http://localhost:2022/register',{
+            params:{
+                usr:usr.value,
+                psw:psw.value
+            }
+        }).then((res)=>{
+            if(res.data==="success"){
+                window.location.href="success.html"
+            }
+
+        }).catch(err=>{
+            if(err.response.data==="usr or psw empty"){
+                var t = document.getElementById("fail");
+                t.innerText = "注册失败，用户名或密码不能为空！"
+                t.style.visibility="visible"
+            }
+            if(err.response.data==="exist"){
+                var t = document.getElementById("fail");
+                t.innerText = "注册失败，用户名已被注册！"
+                t.style.visibility="visible"
+            }
+        })
+    }
+
+</script>
+</html>
